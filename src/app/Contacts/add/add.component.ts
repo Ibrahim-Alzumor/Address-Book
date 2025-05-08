@@ -3,14 +3,12 @@ import {contact} from '../../Interfaces/contact.interface';
 import {ContactsService} from '../../Services/contacts.service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
-import {NavbarComponent} from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-add',
   imports: [
     NgClass,
     ReactiveFormsModule,
-    NavbarComponent,
   ],
   templateUrl: './add.component.html',
   styleUrl: './add.component.css'
