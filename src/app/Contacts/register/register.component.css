@@ -72,18 +72,6 @@ input:focus {
   background: #0056b3;
 }
 
-.success-message {
-  margin-bottom: 1rem;
-  color: #28a745;
-  font-weight: bold;
-}
-
-.error-message {
-  margin-bottom: 1rem;
-  color: #ff4d4d;
-  font-weight: bold;
-}
-
 .login-button-container {
   margin-top: 1rem;
 }

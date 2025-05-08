@@ -64,12 +64,6 @@ input:focus {
   background: #0056b3;
 }
 
-.error-message {
-  margin-bottom: 1rem;
-  color: #ff4d4d;
-  font-weight: bold;
-}
-
 .register-button-container {
   margin-top: 1rem;
 }

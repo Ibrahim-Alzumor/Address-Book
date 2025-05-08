@@ -3,14 +3,12 @@ import {contact} from '../../Interfaces/contact.interface';
 import {ContactsService} from '../../Services/contacts.service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
-import {NavbarComponent} from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-add',
   imports: [
     NgClass,
     ReactiveFormsModule,
-    NavbarComponent,
   ],
   templateUrl: './add.component.html',
   styleUrl: './add.component.css'
@@ -18,17 +16,6 @@ import {NavbarComponent} from '../../navbar/navbar.component';
 export class AddComponent {
   contactForm: FormGroup;
   contacts: any[] = [];
-  newContact: contact = {
-    ID: NaN,
-    job_title: '',
-    firstName: '',
-    lastName: '',
-    company: '',
-    fax: '',
-    email: '',
-    landline: '',
-    phone: ''
-  };
 
   constructor(private fb: FormBuilder, private contactsService: ContactsService) {
     this.contactForm = this.fb.group({
@@ -90,9 +77,6 @@ export class AddComponent {
         ],
       ],
     });
-  }
-
-  ngOnInit(): void {
   }
 
   addContact(): any {
