@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
+import {NavbarComponent} from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
 
