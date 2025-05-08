@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [
+    RouterLink,
+    FormsModule,
+    RouterLinkActive
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
