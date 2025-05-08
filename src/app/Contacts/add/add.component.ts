@@ -3,19 +3,21 @@ import {contact} from '../../Interfaces/contact.interface';
 import {ContactsService} from '../../Services/contacts.service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
+import {NavbarComponent} from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-add',
   imports: [
     NgClass,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NavbarComponent,
   ],
   templateUrl: './add.component.html',
   styleUrl: './add.component.css'
 })
 export class AddComponent {
   contactForm: FormGroup;
-  private contacts: any[] = [];
+  contacts: any[] = [];
   newContact: contact = {
     ID: NaN,
     job_title: '',
@@ -75,27 +77,43 @@ export class AddComponent {
           Validators.pattern(/^fax?\d{10,14}$/),
         ],
       ],
+      job_title: [
+        '',
+        [
+          Validators.required,
+        ],
+      ],
+      company: [
+        '',
+        [
+          Validators.required,
+        ],
+      ],
     });
   }
 
   ngOnInit(): void {
-    this.contacts = this.contactsService.getContacts();
   }
 
   addContact(): any {
-    this.contactsService.addContact(this.newContact)
-    this.contacts = this.contactsService.getContacts();
-    this.newContact = {
-      ID: NaN,
-      job_title: '',
-      firstName: '',
-      lastName: '',
-      company: '',
-      fax: '',
-      email: '',
-      landline: '',
-      phone: ''
-    };
-  }
+    if (this.contactForm.valid) {
+      const formValue = this.contactForm.value;
 
+      const newContact: contact = {
+        ID: Date.now(),
+        job_title: formValue.job_title,
+        company: formValue.company,
+        firstName: formValue.firstName,
+        lastName: formValue.lastName,
+        email: formValue.email,
+        phone: formValue.phone,
+        landline: formValue.landline,
+        fax: formValue.fax,
+      };
+
+      this.contactsService.addContact(newContact);
+      this.contacts = this.contactsService.getContacts();
+      this.contactForm.reset();
+    }
+  }
 }

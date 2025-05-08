@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {contact} from '../../Interfaces/contact.interface';
-import {ContactsService} from '../../Services/contacts.service';
+import {NavbarComponent} from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-list',
-  imports: [],
+  imports: [
+    NavbarComponent,
+
+  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })

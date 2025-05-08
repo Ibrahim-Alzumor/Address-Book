@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background: #f5f5f5;
 }
 
-.login-box {
+.register-box {
   background: #ffffff;
   padding: 2rem;
   border-radius: 10px;
@@ -49,7 +49,7 @@ input:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.login-button {
+.register-button {
   width: 100%;
   padding: 0.75rem;
   background: #007bff;
@@ -58,10 +58,24 @@ input:focus {
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
+  text-decoration: none;
+  display: block;
+  text-align: center;
 }
 
-.login-button:hover {
+.register-button:disabled {
+  background: #b3d7ff;
+  cursor: not-allowed;
+}
+
+.register-button:hover:enabled {
   background: #0056b3;
+}
+
+.success-message {
+  margin-bottom: 1rem;
+  color: #28a745;
+  font-weight: bold;
 }
 
 .error-message {
@@ -70,6 +84,6 @@ input:focus {
   font-weight: bold;
 }
 
-.register-button-container {
+.login-button-container {
   margin-top: 1rem;
 }

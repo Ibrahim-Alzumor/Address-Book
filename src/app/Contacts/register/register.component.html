@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+<div class="register-container">
+  <div class="register-box">
+    <h1>Register</h1>
+    <form>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input
+          id="name"
+          type="text"
+          placeholder="Enter your name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="register-button"
+      >
+        Register
+      </button>
+    </form>
+    <button class="register-button login-button-container" routerLink="/login">
+      Login
+    </button>
+  </div>
+</div>

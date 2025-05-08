@@ -6,23 +6,27 @@
 
 .navbar {
   background-color: #333;
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 
 .navbar-links {
   list-style: none;
   display: flex;
-  justify-content: flex-end;
-  gap: 1.5rem;
+  justify-content: flex-start;
+  gap: 2rem;
 }
 
 .navbar-links li a {
   color: white;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  font-size: 1.1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navbar-links li a:hover {
+  background-color: #555;
   color: #ff9800;
 }

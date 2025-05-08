@@ -1,3 +1,17 @@
-<ul>
-  <li><a routerLink="/">Login</a></li>
-</ul>
+<div class="login-container">
+  <div class="login-box">
+    <h1>Login</h1>
+    <form>
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Enter your email" required/>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" placeholder="Enter your password"
+               required/>
+      </div>
+      <button type="submit" class="login-button" routerLink="/home">Login</button>
+    </form>
+    <button class="login-button register-button-container" routerLink="/Register" routerLinkActive="active">Register
+    </button>
+  </div>
+</div>
