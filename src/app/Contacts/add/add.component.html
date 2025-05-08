@@ -1,1 +1,134 @@
-<p>add works!</p>
+<div class="add-contact-container">
+  <h2>Add Contact</h2>
+  <form [formGroup]="contactForm" (ngSubmit)="addContact()">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        [ngClass]="{'invalid': this.contactForm.controls['firstName'].invalid && this.contactForm.controls['firstName'].touched}"
+      />
+      @if (this.contactForm.controls['firstName'].invalid && this.contactForm.controls['firstName'].touched) {
+        <div class="error-message">
+          @if (this.contactForm.controls['firstName'].errors?.['required']) {
+            <span>First Name is required</span>
+          }
+          @if (this.contactForm.controls['firstName'].errors?.['minlength']) {
+            <span>First Name must be at least 3 characters</span>
+          }
+          @if (this.contactForm.controls['firstName'].errors?.['pattern']) {
+            <span>First Name should only contain letters</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        [ngClass]="{'invalid': this.contactForm.controls['lastName'].invalid && this.contactForm.controls['lastName'].touched}"
+      />
+      @if (this.contactForm.controls['lastName'].invalid && this.contactForm.controls['lastName'].touched) {
+        <div class="error-message">
+          @if (this.contactForm.controls['lastName'].errors?.['required']) {
+            <span>Last Name is required</span>
+          }
+          @if (this.contactForm.controls['lastName'].errors?.['minlength']) {
+            <span>Last Name must be at least 3 characters</span>
+          }
+          @if (this.contactForm.controls['lastName'].errors?.['pattern']) {
+            <span>Last Name should only contain letters</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        [ngClass]="{'invalid': this.contactForm.controls['email'].invalid && this.contactForm.controls['email'].touched}"
+      />
+      @if (this.contactForm.controls['email'].invalid && this.contactForm.controls['email'].touched) {
+        <div class="error-message">
+          @if (this.contactForm.controls['email'].errors?.['required']) {
+            <span>Email is required</span>
+          }
+          @if (this.contactForm.controls['email'].errors?.['email']) {
+            <span>Please enter a valid email</span>
+          }
+          @if (this.contactForm.controls['email'].errors?.['pattern']) {
+            <span>Invalid email format</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phone"
+        [ngClass]="{'invalid': this.contactForm.controls['phone'].invalid && this.contactForm.controls['phone'].touched}"
+      />
+      @if (this.contactForm.controls['phone'].invalid && this.contactForm.controls['phone'].touched) {
+        <div class="error-message">
+          @if (this.contactForm.controls['phone'].errors?.['minlength']) {
+            <span>Phone number must be at least 10 digits</span>
+          }
+          @if (this.contactForm.controls['phone'].errors?.['pattern']) {
+            <span>Invalid phone number format</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="landline">Landline</label>
+      <input
+        id="landline"
+        type="text"
+        formControlName="landline"
+        [ngClass]="{'invalid': this.contactForm.controls['landline'].invalid && this.contactForm.controls['landline'].touched}"
+      />
+      @if (this.contactForm.controls['landline'].invalid && this.contactForm.controls['landline'].touched) {
+        <div class="error-message">
+          @if (this.contactForm.controls['landline'].errors?.['minlength']) {
+            <span>Landline number must be at least 8 digits</span>
+          }
+          @if (this.contactForm.controls['landline'].errors?.['pattern']) {
+            <span>Invalid landline number format</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <label for="fax">Fax</label>
+      <input
+        id="fax"
+        type="text"
+        formControlName="fax"
+        [ngClass]="{'invalid': this.contactForm.controls['fax'].invalid && this.contactForm.controls['fax'].touched}"
+      />
+      @if (this.contactForm.controls['fax'].invalid && this.contactForm.controls['fax'].touched) {
+        <div class="error-message">
+          @if (this.contactForm.controls['fax'].errors?.['minlength']) {
+            <span>Fax number must be at least 10 digits</span>
+          }
+          @if (this.contactForm.controls['fax'].errors?.['pattern']) {
+            <span>Invalid fax number format</span>
+          }
+        </div>
+      }
+    </div>
+
+    <button type="submit">Add Contact</button>
+  </form>
+</div>

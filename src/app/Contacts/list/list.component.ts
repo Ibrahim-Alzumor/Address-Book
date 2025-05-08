@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {contact} from '../../Interfaces/contact.interface';
+import {ContactsService} from '../../Services/contacts.service';
 
 @Component({
   selector: 'app-list',
@@ -6,6 +8,9 @@ import { Component } from '@angular/core';
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
+  ngOnInit(): void {
+
+  }
 
 }
