@@ -1,24 +1,29 @@
-<app-navbar></app-navbar>
 <div class="register-container">
   <div class="register-box">
     <h1>Register</h1>
-    <form>
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input
-          id="name"
-          type="text"
-          placeholder="Enter your name"
-        />
-      </div>
-
+    <form [formGroup]="userForm" (ngSubmit)="addUser()">
       <div class="form-group">
         <label for="email">Email:</label>
         <input
           id="email"
           type="email"
           placeholder="Enter your email"
+          formControlName="email"
+          [ngClass]="{'invalid': this.userForm.controls['email'].invalid && this.userForm.controls['email'].touched}"
         />
+        @if (this.userForm.controls['email'].invalid && this.userForm.controls['email'].touched) {
+          <div class="error-message">
+            @if (this.userForm.controls['email'].errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (this.userForm.controls['email'].errors?.['email']) {
+              <span>Please enter a valid email</span>
+            }
+            @if (this.userForm.controls['email'].errors?.['pattern']) {
+              <span>Invalid email format</span>
+            }
+          </div>
+        }
       </div>
 
       <div class="form-group">
@@ -27,7 +32,22 @@
           id="password"
           type="password"
           placeholder="Enter your password"
+          formControlName="password"
+          [ngClass]="{'invalid': this.userForm.controls['password'].invalid && this.userForm.controls['password'].touched}"
         />
+        @if (this.userForm.controls['password'].invalid && this.userForm.controls['password'].touched) {
+          <div class="error-message">
+            @if (this.userForm.controls['password'].errors?.['required']) {
+              <span>Password is required</span>
+            }
+            @if (this.userForm.controls['password'].errors?.['minlength']) {
+              <span>Password must be at least 8 characters</span>
+            }
+            @if (this.userForm.controls['password'].errors?.['pattern']) {
+              <span>Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.</span>
+            }
+          </div>
+        }
       </div>
 
       <button
@@ -37,7 +57,7 @@
         Register
       </button>
     </form>
-    <button class="register-button login-button-container" routerLink="/">
+    <button class="register-button login-button-container" routerLink="/Login">
       Login
     </button>
   </div>
