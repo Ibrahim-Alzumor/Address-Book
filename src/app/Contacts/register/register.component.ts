@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {user} from '../../Interfaces/user.interface';
 import {UserService} from '../../Services/user.service';
 import {NgClass} from '@angular/common';
@@ -19,7 +19,7 @@ export class RegisterComponent {
   userForm: FormGroup;
   users: any[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UserService,) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
     this.userForm = this.fb.group({
       email: [
         '',
@@ -44,13 +44,24 @@ export class RegisterComponent {
     if (this.userForm.valid) {
       const formValue = this.userForm.value;
 
-      const newUser: user = {
-        email: formValue.email,
-        password: formValue.password,
-      };
-      this.userService.addUser(newUser)
-      this.users = this.userService.getUsers();
-      this.userForm.reset();
+      const Users = JSON.parse(localStorage.getItem('users') || '[]');
+
+      const usersFind = Users.find((user: any) =>
+        user.email.toLowerCase() === formValue.email.toLowerCase()
+      );
+      if (usersFind) {
+        alert('Email already exists. Please log in instead.');
+        return;
+      } else if (!usersFind) {
+        const newUser: user = {
+          email: formValue.email,
+          password: formValue.password,
+        };
+        this.userService.addUser(newUser)
+        this.users = this.userService.getUsers();
+        this.userForm.reset();
+        this.router.navigate(['/Login']);
+      }
     }
   }
 }
