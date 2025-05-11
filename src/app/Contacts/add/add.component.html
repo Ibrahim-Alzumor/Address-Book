@@ -81,7 +81,7 @@
       @if (this.contactForm.controls['job_title'].invalid && this.contactForm.controls['job_title'].touched) {
         <div class="error-message">
           @if (this.contactForm.controls['job_title'].errors?.['required']) {
-            <span>Last Name is required</span>
+            <span>Job Title is required</span>
           }
         </div>
       }
@@ -98,7 +98,7 @@
       @if (this.contactForm.controls['company'].invalid && this.contactForm.controls['company'].touched) {
         <div class="error-message">
           @if (this.contactForm.controls['company'].errors?.['required']) {
-            <span>Last Name is required</span>
+            <span>Company Name is required</span>
           }
         </div>
       }
