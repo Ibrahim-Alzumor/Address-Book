@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {UserService} from '../../Services/user.service';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -9,7 +8,9 @@ import {NgClass} from '@angular/common';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -17,7 +18,7 @@ import {NgClass} from '@angular/common';
 export class LoginComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.userForm = this.fb.group({
       email: [
         '',
@@ -43,16 +44,19 @@ export class LoginComponent {
 
       const Users = JSON.parse(localStorage.getItem('users') || '[]');
 
-
       const usersFind = Users.find((user: any) =>
-        user.email === formValue.email && user.password === formValue.password
+        user.email.toLowerCase() === formValue.email.toLowerCase() &&
+        user.password === formValue.password
       );
 
       if (usersFind) {
-        localStorage.setItem('users', JSON.stringify(usersFind));
         this.router.navigate(['/']);
+        sessionStorage.setItem('authToken', JSON.stringify(usersFind));
+      } else {
+        alert('Invalid email or password');
       }
     }
   }
+
 
 }

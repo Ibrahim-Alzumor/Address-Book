@@ -21,14 +21,6 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder, private userService: UserService,) {
     this.userForm = this.fb.group({
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern(/^[a-zA-Z\s]+$/),
-        ],
-      ],
       email: [
         '',
         [
@@ -53,7 +45,6 @@ export class RegisterComponent {
       const formValue = this.userForm.value;
 
       const newUser: user = {
-        name: formValue.name,
         email: formValue.email,
         password: formValue.password,
       };
