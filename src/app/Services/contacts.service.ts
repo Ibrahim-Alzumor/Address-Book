@@ -23,7 +23,20 @@ export class ContactsService {
     const contacts = this.getContacts();
     contacts.push(_contact);
     this.saveContact(contacts)
+  }
 
+  updateContact(updatedContact: contact): void {
+    const contacts = this.getContacts();
+    const index = contacts.findIndex(c => c.ID === updatedContact.ID);
+    if (index !== -1) {
+      contacts[index] = updatedContact;
+      this.saveContact(contacts);
+    }
+  }
+
+  deleteContact(id: number): void {
+    const contacts = this.getContacts().filter(c => c.ID !== id);
+    this.saveContact(contacts);
   }
 }
 
