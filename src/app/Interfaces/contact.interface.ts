@@ -5,7 +5,7 @@ export interface contact {
   firstName: string;
   lastName: string;
   company: string;
-  phone: string | undefined;
-  landline: string | undefined;
-  fax: string | undefined;
+  phone: string;
+  landline: string;
+  fax: string;
 }
