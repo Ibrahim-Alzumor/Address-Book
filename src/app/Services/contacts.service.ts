@@ -1,42 +1,78 @@
 import {contact} from '../Interfaces/contact.interface';
 import {Injectable} from '@angular/core';
+import {firstValueFrom, Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from './enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  private storageKey = 'contacts';
+  private url = `${environment.apiUrl}/contact`;
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-  getContacts(): any [] {
-    const contact = localStorage.getItem(this.storageKey);
-    return contact ? JSON.parse(contact) : [];
+  private getAuthHeaders(): { [header: string]: string } {
+    const token = localStorage.getItem('authToken');
+    return {Authorization: `Bearer ${token}`};
   }
 
-  saveContact(Contact: contact[]) {
-    localStorage.setItem(this.storageKey, JSON.stringify(Contact));
+  async getContacts(): Promise<contact[]> {
+    return await firstValueFrom(
+      this.http.get<contact[]>(`${environment.apiUrl}/contact/`)
+    );
   }
 
-  addContact(_contact: contact) {
-    const contacts = this.getContacts();
-    contacts.push(_contact);
-    this.saveContact(contacts)
+  async getContactById(id: number): Promise<contact> {
+    return await firstValueFrom(this.http.get<contact>(`${this.url}/${id}`));
+  }
+
+  addContact(Contact: contact): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = token
+      ? new HttpHeaders({Authorization: `Bearer ${token}`})
+      : new HttpHeaders();
+
+    return this.http.post(`${this.url}/add`, Contact, {headers});
   }
 
   updateContact(updatedContact: contact): void {
-    const contacts = this.getContacts();
-    const index = contacts.findIndex(c => c.ID === updatedContact.ID);
-    if (index !== -1) {
-      contacts[index] = updatedContact;
-      this.saveContact(contacts);
-    }
+    this.http.put(`${this.url}/update`, {
+      ID: updatedContact.ID,
+      job_title: updatedContact.job_title,
+      email: updatedContact.email,
+      firstName: updatedContact.firstName,
+      lastName: updatedContact.lastName,
+      company: updatedContact.company,
+      phone: updatedContact.phone,
+      landline: updatedContact.landline,
+      fax: updatedContact.fax,
+    }, {
+      headers: this.getAuthHeaders(),
+    }).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error('Error updating cart item:', error);
+      },
+    });
   }
 
-  deleteContact(id: number): void {
-    const contacts = this.getContacts().filter(c => c.ID !== id);
-    this.saveContact(contacts);
+  deleteContact(contactId: number): void {
+    console.log(contactId);
+    this.http.delete(`${this.url}/remove`, {
+      headers: this.getAuthHeaders(),
+      body: {contactId},
+    }).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error('Error removing item from cart:', error);
+      },
+    });
   }
+
+
 }
 

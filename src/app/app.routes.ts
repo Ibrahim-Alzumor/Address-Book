@@ -3,7 +3,7 @@ import {HomeComponent} from './Contacts/home/home.component';
 import {AddComponent} from './Contacts/add/add.component';
 import {LoginComponent} from './Contacts/login/login.component';
 import {RegisterComponent} from './Contacts/register/register.component';
-import {AuthGuard} from './auth.guard';
+import {AuthGuard} from './Services/auth.guard';
 
 
 export const routes: Routes = [

@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   async loadContacts(): Promise<void> {
     try {
-      this.contacts = this.contactService.getContacts();
+      this.contacts = await this.contactService.getContacts();
     } catch (error) {
       console.error('Failed to load contacts', error);
     }

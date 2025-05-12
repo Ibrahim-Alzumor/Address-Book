@@ -4,6 +4,8 @@ import {Router, RouterLink} from '@angular/router';
 import {user} from '../../Interfaces/user.interface';
 import {UserService} from '../../Services/user.service';
 import {NgClass} from '@angular/common';
+import {ApiService} from '../../Services/api.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +21,7 @@ export class RegisterComponent {
   userForm: FormGroup;
   users: any[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private apiService: ApiService) {
     this.userForm = this.fb.group({
       email: [
         '',
@@ -40,28 +42,19 @@ export class RegisterComponent {
     })
   }
 
-  addUser() {
+  register() {
     if (this.userForm.valid) {
-      const formValue = this.userForm.value;
-
-      const Users = JSON.parse(localStorage.getItem('users') || '[]');
-
-      const usersFind = Users.find((user: any) =>
-        user.email.toLowerCase() === formValue.email.toLowerCase()
-      );
-      if (usersFind) {
-        alert('Email already exists. Please log in instead.');
-        return;
-      } else if (!usersFind) {
-        const newUser: user = {
-          email: formValue.email,
-          password: formValue.password,
-        };
-        this.userService.addUser(newUser)
-        this.users = this.userService.getUsers();
-        this.userForm.reset();
-        this.router.navigate(['/Login']);
-      }
+      this.apiService.registerUser(this.userForm.value).subscribe({
+        next: (response) => {
+          localStorage.setItem('authToken', response.token);
+          this.router.navigate(['']).then(() => {
+            console.log('Navigation successful.');
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        },
+      });
     }
   }
 }

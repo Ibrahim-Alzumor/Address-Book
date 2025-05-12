@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
+import {ApiService} from '../../Services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,9 @@ import {NgClass} from '@angular/common';
 })
 export class LoginComponent {
   userForm: FormGroup;
+  credentials = {email: '', password: ''};
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
     this.userForm = this.fb.group({
       email: [
         '',
@@ -38,25 +40,18 @@ export class LoginComponent {
     })
   }
 
-  loginUser(): void {
-    if (this.userForm.valid) {
-      const formValue = this.userForm.value;
-
-      const Users = JSON.parse(localStorage.getItem('users') || '[]');
-
-      const usersFind = Users.find((user: any) =>
-        user.email.toLowerCase() === formValue.email.toLowerCase() &&
-        user.password === formValue.password
-      );
-
-      if (usersFind) {
-        this.router.navigate(['/']);
-        sessionStorage.setItem('authToken', JSON.stringify(usersFind));
-      } else {
-        alert('Invalid email or password');
-      }
-    }
+  login(): void {
+    this.credentials = {email: this.userForm.value.email, password: this.userForm.value.password};
+    this.apiService.loginUser(this.credentials).subscribe({
+      next: (response: any) => {
+        localStorage.setItem('authToken', response.token);
+        this.router.navigate(['']).then(() => {
+          console.log('Navigation successful.');
+        });
+      },
+      error: (error: any) => {
+        console.error('Login failed:', error);
+      },
+    });
   }
-
-
 }
