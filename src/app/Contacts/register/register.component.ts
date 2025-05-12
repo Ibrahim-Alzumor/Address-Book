@@ -19,7 +19,9 @@ export class RegisterComponent {
   userForm: FormGroup;
   users: any[] = [];
 
+
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
+
     this.userForm = this.fb.group({
       email: [
         '',
@@ -53,6 +55,7 @@ export class RegisterComponent {
           console.error(error);
         },
       });
+
     }
   }
 }
