@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
+import {ApiService} from '../Services/api.service';
 
 
 @Component({
@@ -11,11 +12,11 @@ import {Router, RouterLink} from "@angular/router";
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  constructor(private router: Router) {
+  constructor(private router: Router, private apiService: ApiService) {
   }
 
   onLogout() {
-    sessionStorage.removeItem('authToken');
     this.router.navigate(['/Login']);
+    this.apiService.clearToken()
   }
 }

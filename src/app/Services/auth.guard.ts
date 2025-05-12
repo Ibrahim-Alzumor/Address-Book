@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    const token = sessionStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken');
     if (token) {
       return true;
     } else {

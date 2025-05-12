@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   async loadContacts(): Promise<void> {
     try {
-      this.contacts = this.contactService.getContacts();
+      this.contacts = await this.contactService.getContacts();
     } catch (error) {
       console.error('Failed to load contacts', error);
     }
@@ -50,7 +50,8 @@ export class HomeComponent implements OnInit {
   saveEditedContact(): void {
     if (this.editContacts) {
       this.contactService.updateContact(this.editContacts);
-      this.loadContacts();
+      this.contactService.getContacts();
+      this.loadContacts()
       this.closeEditContactModal();
     }
   }
@@ -58,7 +59,8 @@ export class HomeComponent implements OnInit {
   deleteContact(id: number): void {
     if (confirm('Are you sure you want to delete this contact?')) {
       this.contactService.deleteContact(id);
-      this.loadContacts();
+      this.contactService.getContacts();
+      this.loadContacts()
     }
   }
 }

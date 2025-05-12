@@ -1,42 +1,43 @@
 import {contact} from '../Interfaces/contact.interface';
 import {Injectable} from '@angular/core';
+import {firstValueFrom} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  private storageKey = 'contacts';
+  private url = 'http://localhost:3000/contact';
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-  getContacts(): any [] {
-    const contact = localStorage.getItem(this.storageKey);
-    return contact ? JSON.parse(contact) : [];
+  async getContacts(): Promise<contact[]> {
+    return await firstValueFrom(
+      this.http.get<contact[]>(`${this.url}/`,)
+    );
   }
 
-  saveContact(Contact: contact[]) {
-    localStorage.setItem(this.storageKey, JSON.stringify(Contact));
-  }
-
-  addContact(_contact: contact) {
-    const contacts = this.getContacts();
-    contacts.push(_contact);
-    this.saveContact(contacts)
+  addContact(Contact: contact): void {
+    this.http.post(`${this.url}/add`, Contact).subscribe({
+      next: () => console.log('Contact added'),
+      error: (error) => console.error('Error adding contact:', error)
+    });
   }
 
   updateContact(updatedContact: contact): void {
-    const contacts = this.getContacts();
-    const index = contacts.findIndex(c => c.ID === updatedContact.ID);
-    if (index !== -1) {
-      contacts[index] = updatedContact;
-      this.saveContact(contacts);
-    }
+    this.http.put(`${this.url}/update`, updatedContact).subscribe({
+      next: () => console.log('Contact updated'),
+      error: (error) => console.error('Error updating contact:', error)
+    });
   }
 
-  deleteContact(id: number): void {
-    const contacts = this.getContacts().filter(c => c.ID !== id);
-    this.saveContact(contacts);
+  deleteContact(ID: contact["ID"]): void {
+    this.http.delete(`${this.url}/remove`, {body: {ID}}).subscribe({
+      next: () => console.log('Contact Deleted'),
+      error: (error) => console.error('Error deleting contact:', error)
+    });
   }
+
 }
 

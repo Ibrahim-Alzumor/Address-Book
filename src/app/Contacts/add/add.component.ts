@@ -79,12 +79,12 @@ export class AddComponent {
     });
   }
 
-  addContact(): any {
+  async addContact(): Promise<any> {
     if (this.contactForm.valid) {
       const formValue = this.contactForm.value;
 
       const newContact: contact = {
-        ID: Date.now(),
+        ID: new Date().getTime(),
         job_title: formValue.job_title,
         company: formValue.company,
         firstName: formValue.firstName,
@@ -96,7 +96,6 @@ export class AddComponent {
       };
 
       this.contactsService.addContact(newContact);
-      this.contacts = this.contactsService.getContacts();
       this.contactForm.reset();
     }
   }
