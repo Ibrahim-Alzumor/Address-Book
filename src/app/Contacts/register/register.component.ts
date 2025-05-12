@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
-import {user} from '../../Interfaces/user.interface';
-import {UserService} from '../../Services/user.service';
 import {NgClass} from '@angular/common';
 import {ApiService} from '../../Services/api.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -21,7 +19,7 @@ export class RegisterComponent {
   userForm: FormGroup;
   users: any[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
     this.userForm = this.fb.group({
       email: [
         '',

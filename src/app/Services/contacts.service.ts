@@ -8,71 +8,37 @@ import {environment} from './enviroment';
   providedIn: 'root'
 })
 export class ContactsService {
-  private url = `${environment.apiUrl}/contact`;
+  private url = 'http://localhost:3000/contact';
 
   constructor(private http: HttpClient) {
   }
 
-  private getAuthHeaders(): { [header: string]: string } {
-    const token = localStorage.getItem('authToken');
-    return {Authorization: `Bearer ${token}`};
-  }
-
   async getContacts(): Promise<contact[]> {
     return await firstValueFrom(
-      this.http.get<contact[]>(`${environment.apiUrl}/contact/`)
+      this.http.get<contact[]>(`${this.url}/`,)
     );
   }
 
-  async getContactById(id: number): Promise<contact> {
-    return await firstValueFrom(this.http.get<contact>(`${this.url}/${id}`));
-  }
-
-  addContact(Contact: contact): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    const headers = token
-      ? new HttpHeaders({Authorization: `Bearer ${token}`})
-      : new HttpHeaders();
-
-    return this.http.post(`${this.url}/add`, Contact, {headers});
+  addContact(Contact: contact): void {
+    this.http.post(`${this.url}/add`, Contact).subscribe({
+      next: () => console.log('Contact added'),
+      error: (error) => console.error('Error adding contact:', error)
+    });
   }
 
   updateContact(updatedContact: contact): void {
-    this.http.put(`${this.url}/update`, {
-      ID: updatedContact.ID,
-      job_title: updatedContact.job_title,
-      email: updatedContact.email,
-      firstName: updatedContact.firstName,
-      lastName: updatedContact.lastName,
-      company: updatedContact.company,
-      phone: updatedContact.phone,
-      landline: updatedContact.landline,
-      fax: updatedContact.fax,
-    }, {
-      headers: this.getAuthHeaders(),
-    }).subscribe({
-      next: () => {
-      },
-      error: (error) => {
-        console.error('Error updating cart item:', error);
-      },
+    this.http.put(`${this.url}/update`, updatedContact).subscribe({
+      next: () => console.log('Contact updated'),
+      error: (error) => console.error('Error updating contact:', error)
     });
   }
 
-  deleteContact(contactId: number): void {
-    console.log(contactId);
-    this.http.delete(`${this.url}/remove`, {
-      headers: this.getAuthHeaders(),
-      body: {contactId},
-    }).subscribe({
-      next: () => {
-      },
-      error: (error) => {
-        console.error('Error removing item from cart:', error);
-      },
+  deleteContact(ID: contact["ID"]): void {
+    this.http.delete(`${this.url}/remove`, {body: {ID}}).subscribe({
+      next: () => console.log('Contact Deleted'),
+      error: (error) => console.error('Error deleting contact:', error)
     });
   }
-
 
 }
 

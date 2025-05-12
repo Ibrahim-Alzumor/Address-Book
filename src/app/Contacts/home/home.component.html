@@ -33,6 +33,12 @@
       <label>Email:</label>
       <input [(ngModel)]="editContacts.email"/>
 
+      <label>Job Title:</label>
+      <input [(ngModel)]="editContacts.job_title"/>
+
+      <label>Company:</label>
+      <input [(ngModel)]="editContacts.company"/>
+
       <label>Phone:</label>
       <input [(ngModel)]="editContacts.phone"/>
 
@@ -41,12 +47,6 @@
 
       <label>Fax:</label>
       <input [(ngModel)]="editContacts.fax"/>
-
-      <label>Job Title:</label>
-      <input [(ngModel)]="editContacts.job_title"/>
-
-      <label>Company:</label>
-      <input [(ngModel)]="editContacts.company"/>
 
       <div class="modal-actions">
         <button class="btn save-btn" (click)="saveEditedContact()">Save</button>

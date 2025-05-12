@@ -11,13 +11,6 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-  }
-
   registerUser(user: { name: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/register`, user);
   }
