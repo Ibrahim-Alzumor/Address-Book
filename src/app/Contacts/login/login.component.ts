@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
-import {ApiService} from '../../Services/api.service';
+import {ApiService} from '../../services/api.service';
 
 @Component({
   selector: 'app-login',

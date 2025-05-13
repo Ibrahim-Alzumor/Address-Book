@@ -11,19 +11,9 @@
           formControlName="email"
           [ngClass]="{'invalid': this.userForm.controls['email'].invalid && this.userForm.controls['email'].touched}"
         />
-        @if (this.userForm.controls['email'].invalid && this.userForm.controls['email'].touched) {
-          <div class="error-message">
-            @if (this.userForm.controls['email'].errors?.['required']) {
-              <span>Email is required</span>
-            }
-            @if (this.userForm.controls['email'].errors?.['email']) {
-              <span>Please enter a valid email</span>
-            }
-            @if (this.userForm.controls['email'].errors?.['pattern']) {
-              <span>Invalid email format</span>
-            }
-          </div>
-        }
+        <div *ngIf="emailErrorMessage" class="error-message">
+          <span>{{ emailErrorMessage }}</span>
+        </div>
       </div>
 
       <div class="form-group">
@@ -35,19 +25,9 @@
           formControlName="password"
           [ngClass]="{'invalid': this.userForm.controls['password'].invalid && this.userForm.controls['password'].touched}"
         />
-        @if (this.userForm.controls['password'].invalid && this.userForm.controls['password'].touched) {
-          <div class="error-message">
-            @if (this.userForm.controls['password'].errors?.['required']) {
-              <span>Password is required</span>
-            }
-            @if (this.userForm.controls['password'].errors?.['minlength']) {
-              <span>Password must be at least 8 characters</span>
-            }
-            @if (this.userForm.controls['password'].errors?.['pattern']) {
-              <span>Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.</span>
-            }
-          </div>
-        }
+        <div *ngIf="passwordErrorMessage" class="error-message">
+          <span>{{ passwordErrorMessage }}</span>
+        </div>
       </div>
 
       <button

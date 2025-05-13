@@ -1,4 +1,4 @@
-import {contact} from '../Interfaces/contact.interface';
+import {contact} from '../interfaces/contact.interface';
 import {Injectable} from '@angular/core';
 import {firstValueFrom} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
@@ -25,7 +25,7 @@ export class ContactsService {
     });
   }
 
-  updateContact(updatedContact: contact): void {
+  updateContact(updatedContact: contact | null): void {
     this.http.put(`${this.url}/update`, updatedContact).subscribe({
       next: () => console.log('Contact updated'),
       error: (error) => console.error('Error updating contact:', error)

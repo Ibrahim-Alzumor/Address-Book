@@ -7,10 +7,10 @@
         <a class="contact-card-link">
           <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
           <p><strong>Email:</strong> {{ contact.email }}</p>
-          <p><strong>Job Title:</strong> {{ contact.job_title }}</p>
+          <p><strong>Job Title:</strong> {{ contact.jobTitle }}</p>
         </a>
         <div class="button-group">
-          <button class="btn edit-btn" (click)="editContact(contact); $event.stopPropagation()">Edit</button>
+          <button class="btn edit-btn" (click)="editContact(contact)" routerLink="/add">Edit</button>
           <button class="btn delete-btn" (click)="deleteContact(contact.ID); $event.stopPropagation()">Delete</button>
         </div>
       </div>
@@ -18,43 +18,43 @@
   </div>
 </div>
 
-@if (editContacts) {
-  <div class="modal">
-    <div class="modal-content">
-      <span class="close" (click)="closeEditContactModal()">&times;</span>
-      <h2>Edit Contact</h2>
+<!--@if (editContacts) {-->
+<!--  <div class="modal">-->
+<!--    <div class="modal-content">-->
+<!--      <span class="close" (click)="closeEditContactModal()">&times;</span>-->
+<!--      <h2>Edit Contact</h2>-->
 
-      <label>First Name:</label>
-      <input [(ngModel)]="editContacts.firstName"/>
+<!--      <label>First Name:</label>-->
+<!--      <input [(ngModel)]="editContacts.firstName"/>-->
 
-      <label>Last Name:</label>
-      <input [(ngModel)]="editContacts.lastName"/>
+<!--      <label>Last Name:</label>-->
+<!--      <input [(ngModel)]="editContacts.lastName"/>-->
 
-      <label>Email:</label>
-      <input [(ngModel)]="editContacts.email"/>
+<!--      <label>Email:</label>-->
+<!--      <input [(ngModel)]="editContacts.email"/>-->
 
-      <label>Job Title:</label>
-      <input [(ngModel)]="editContacts.job_title"/>
+<!--      <label>Job Title:</label>-->
+<!--      <input [(ngModel)]="editContacts.jobTitle"/>-->
 
-      <label>Company:</label>
-      <input [(ngModel)]="editContacts.company"/>
+<!--      <label>Company:</label>-->
+<!--      <input [(ngModel)]="editContacts.company"/>-->
 
-      <label>Phone:</label>
-      <input [(ngModel)]="editContacts.phone"/>
+<!--      <label>Phone:</label>-->
+<!--      <input [(ngModel)]="editContacts.phone"/>-->
 
-      <label>Landline:</label>
-      <input [(ngModel)]="editContacts.landline"/>
+<!--      <label>Landline:</label>-->
+<!--      <input [(ngModel)]="editContacts.landline"/>-->
 
-      <label>Fax:</label>
-      <input [(ngModel)]="editContacts.fax"/>
+<!--      <label>Fax:</label>-->
+<!--      <input [(ngModel)]="editContacts.fax"/>-->
 
-      <div class="modal-actions">
-        <button class="btn save-btn" (click)="saveEditedContact()">Save</button>
-        <button class="btn cancel-btn" (click)="closeEditContactModal()">Cancel</button>
-      </div>
-    </div>
-  </div>
-}
+<!--      <div class="modal-actions">-->
+<!--        <button class="btn save-btn" (click)="saveEditedContact()">Save</button>-->
+<!--        <button class="btn cancel-btn" (click)="closeEditContactModal()">Cancel</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--}-->
 
 
 @if (selectedContact) {
@@ -64,7 +64,7 @@
       <h2>{{ selectedContact.firstName }} {{ selectedContact.lastName }}</h2>
       <p><strong>Email:</strong> {{ selectedContact.email }}</p>
       <p><strong>Company Name:</strong> {{ selectedContact.company }}</p>
-      <p><strong>Job Title:</strong> {{ selectedContact.job_title }}</p>
+      <p><strong>Job Title:</strong> {{ selectedContact.jobTitle }}</p>
       <p><strong>Phone Number:</strong> {{ selectedContact.phone }}</p>
       <p><strong>Landline Number:</strong> {{ selectedContact.landline }}</p>
       <p><strong>Fax Number:</strong> {{ selectedContact.fax }}</p>
