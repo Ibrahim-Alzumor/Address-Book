@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
-import {ApiService} from '../Services/api.service';
+import {ApiService} from '../services/api.service';
+import {ContactEditorService} from '../services/contact-editor.service';
 
 
 @Component({
@@ -12,11 +13,16 @@ import {ApiService} from '../Services/api.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(private router: Router, private apiService: ApiService, private contactEditorService: ContactEditorService) {
   }
 
   onLogout() {
-    this.router.navigate(['/Login']);
+    this.router.navigate(['/login']);
     this.apiService.clearToken()
+  }
+
+  addingContact() {
+    this.router.navigate(['/add']);
+    this.contactEditorService.clear();
   }
 }

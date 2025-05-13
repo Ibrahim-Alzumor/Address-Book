@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
-import {NgClass} from '@angular/common';
-import {ApiService} from '../../Services/api.service';
+import {NgClass, NgIf} from '@angular/common';
+import {ApiService} from '../../services/api.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
@@ -10,14 +10,14 @@ import {HttpErrorResponse} from '@angular/common/http';
   imports: [
     ReactiveFormsModule,
     RouterLink,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   userForm: FormGroup;
-  users: any[] = [];
 
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
     this.userForm = this.fb.group({
@@ -54,5 +54,37 @@ export class RegisterComponent {
         },
       });
     }
+  }
+
+  get emailErrorMessage(): string | null {
+    const emailControl = this.userForm.controls['email'];
+    if (emailControl.touched && emailControl.invalid) {
+      if (emailControl.errors?.['required']) {
+        return 'Email is required';
+      }
+      if (emailControl.errors?.['email']) {
+        return 'Please enter a valid email';
+      }
+      if (emailControl.errors?.['pattern']) {
+        return 'Invalid email format. Please use a valid format like example@domain.com';
+      }
+    }
+    return null;
+  }
+
+  get passwordErrorMessage(): string | null {
+    const passwordControl = this.userForm.controls['password'];
+    if (passwordControl.touched && passwordControl.invalid) {
+      if (passwordControl.errors?.['required']) {
+        return 'Password is required';
+      }
+      if (passwordControl.errors?.['minlength']) {
+        return 'Password must be at least 8 characters';
+      }
+      if (passwordControl.errors?.['pattern']) {
+        return 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special character.';
+      }
+    }
+    return null;
   }
 }

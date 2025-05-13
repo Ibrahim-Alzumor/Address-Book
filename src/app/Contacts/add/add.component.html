@@ -1,27 +1,17 @@
 <div class="add-contact-container">
-  <h2>Add Contact</h2>
-  <form [formGroup]="contactForm" (ngSubmit)="addContact()">
+  <h2>{{ editContacts ? 'Edit Contact' : 'Add Contact' }}</h2>
+  <form [formGroup]="contactForm" (ngSubmit)="editContacts ? saveEditedContact() : addContact()">
     <div class="form-group">
       <label for="firstName">First Name</label>
       <input
         id="firstName"
         type="text"
         formControlName="firstName"
-        [ngClass]="{'invalid': this.contactForm.controls['firstName'].invalid && this.contactForm.controls['firstName'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['firstName'].invalid && contactForm.controls['firstName'].touched}"
       />
-      @if (this.contactForm.controls['firstName'].invalid && this.contactForm.controls['firstName'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['firstName'].errors?.['required']) {
-            <span>First Name is required</span>
-          }
-          @if (this.contactForm.controls['firstName'].errors?.['minlength']) {
-            <span>First Name must be at least 3 characters</span>
-          }
-          @if (this.contactForm.controls['firstName'].errors?.['pattern']) {
-            <span>First Name should only contain letters</span>
-          }
-        </div>
-      }
+      <div *ngIf="firstNameErrorMessage" class="error-message">
+        <span>{{ firstNameErrorMessage }}</span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -30,21 +20,11 @@
         id="lastName"
         type="text"
         formControlName="lastName"
-        [ngClass]="{'invalid': this.contactForm.controls['lastName'].invalid && this.contactForm.controls['lastName'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['lastName'].invalid && contactForm.controls['lastName'].touched}"
       />
-      @if (this.contactForm.controls['lastName'].invalid && this.contactForm.controls['lastName'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['lastName'].errors?.['required']) {
-            <span>Last Name is required</span>
-          }
-          @if (this.contactForm.controls['lastName'].errors?.['minlength']) {
-            <span>Last Name must be at least 3 characters</span>
-          }
-          @if (this.contactForm.controls['lastName'].errors?.['pattern']) {
-            <span>Last Name should only contain letters</span>
-          }
-        </div>
-      }
+      <div *ngIf="lastNameErrorMessage" class="error-message">
+        <span>{{ lastNameErrorMessage }}</span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -53,38 +33,24 @@
         id="email"
         type="email"
         formControlName="email"
-        [ngClass]="{'invalid': this.contactForm.controls['email'].invalid && this.contactForm.controls['email'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['email'].invalid && contactForm.controls['email'].touched}"
       />
-      @if (this.contactForm.controls['email'].invalid && this.contactForm.controls['email'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['email'].errors?.['required']) {
-            <span>Email is required</span>
-          }
-          @if (this.contactForm.controls['email'].errors?.['email']) {
-            <span>Please enter a valid email</span>
-          }
-          @if (this.contactForm.controls['email'].errors?.['pattern']) {
-            <span>Invalid email format</span>
-          }
-        </div>
-      }
+      <div *ngIf="emailErrorMessage" class="error-message">
+        <span>{{ emailErrorMessage }}</span>
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="job_title">Job Title</label>
+      <label for="jobTitle">Job Title</label>
       <input
-        id="job_title"
+        id="jobTitle"
         type="text"
-        formControlName="job_title"
-        [ngClass]="{'invalid': this.contactForm.controls['job_title'].invalid && this.contactForm.controls['job_title'].touched}"
+        formControlName="jobTitle"
+        [ngClass]="{'invalid': contactForm.controls['jobTitle'].invalid && contactForm.controls['jobTitle'].touched}"
       />
-      @if (this.contactForm.controls['job_title'].invalid && this.contactForm.controls['job_title'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['job_title'].errors?.['required']) {
-            <span>Job Title is required</span>
-          }
-        </div>
-      }
+      <div *ngIf="jobTitleErrorMessage" class="error-message">
+        <span>{{ jobTitleErrorMessage }}</span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -93,15 +59,11 @@
         id="company"
         type="text"
         formControlName="company"
-        [ngClass]="{'invalid': this.contactForm.controls['company'].invalid && this.contactForm.controls['company'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['company'].invalid && contactForm.controls['company'].touched}"
       />
-      @if (this.contactForm.controls['company'].invalid && this.contactForm.controls['company'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['company'].errors?.['required']) {
-            <span>Company Name is required</span>
-          }
-        </div>
-      }
+      <div *ngIf="companyErrorMessage" class="error-message">
+        <span>{{ companyErrorMessage }}</span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -110,18 +72,11 @@
         id="phone"
         type="text"
         formControlName="phone"
-        [ngClass]="{'invalid': this.contactForm.controls['phone'].invalid && this.contactForm.controls['phone'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['phone'].invalid && contactForm.controls['phone'].touched}"
       />
-      @if (this.contactForm.controls['phone'].invalid && this.contactForm.controls['phone'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['phone'].errors?.['minlength']) {
-            <span>Phone number must be at least 10 digits</span>
-          }
-          @if (this.contactForm.controls['phone'].errors?.['pattern']) {
-            <span>Invalid phone number format</span>
-          }
-        </div>
-      }
+      <div *ngIf="phoneErrorMessage" class="error-message">
+        <span>{{ phoneErrorMessage }}</span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -130,39 +85,27 @@
         id="landline"
         type="text"
         formControlName="landline"
-        [ngClass]="{'invalid': this.contactForm.controls['landline'].invalid && this.contactForm.controls['landline'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['landline'].invalid && contactForm.controls['landline'].touched}"
       />
-      @if (this.contactForm.controls['landline'].invalid && this.contactForm.controls['landline'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['landline'].errors?.['minlength']) {
-            <span>Landline number must be at least 8 digits</span>
-          }
-          @if (this.contactForm.controls['landline'].errors?.['pattern']) {
-            <span>Invalid landline number format</span>
-          }
-        </div>
-      }
+      <div *ngIf="landlineErrorMessage" class="error-message">
+        <span>{{ landlineErrorMessage }}</span>
+      </div>
     </div>
+
     <div class="form-group">
       <label for="fax">Fax</label>
       <input
         id="fax"
         type="text"
         formControlName="fax"
-        [ngClass]="{'invalid': this.contactForm.controls['fax'].invalid && this.contactForm.controls['fax'].touched}"
+        [ngClass]="{'invalid': contactForm.controls['fax'].invalid && contactForm.controls['fax'].touched}"
       />
-      @if (this.contactForm.controls['fax'].invalid && this.contactForm.controls['fax'].touched) {
-        <div class="error-message">
-          @if (this.contactForm.controls['fax'].errors?.['minlength']) {
-            <span>Fax number must be at least 10 digits</span>
-          }
-          @if (this.contactForm.controls['fax'].errors?.['pattern']) {
-            <span>Invalid fax number format</span>
-          }
-        </div>
-      }
+      <div *ngIf="faxErrorMessage" class="error-message">
+        <span>{{ faxErrorMessage }}</span>
+      </div>
     </div>
-
-    <button type="submit">Add Contact</button>
+    <button class="btn save-btn" type="submit">
+      {{ editContacts ? 'Save' : 'Add Contact' }}
+    </button>
   </form>
 </div>
